@@ -8,7 +8,7 @@ var app = express();
 app.set('port', process.env.PORT || 1337);
 
 
-app.get('/tod', function(req, res) {
+app.get('/', function(req, res) {
 	request(url, function (error, response, body) {
 		if (!error) {
 			var $ = cheerio.load(body),
