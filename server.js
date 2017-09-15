@@ -2,7 +2,7 @@ var express = require('express');
 var request = require("request"),
     cheerio = require("cheerio"),
     url = "http://www.eduro.com/";
-tod = '';
+
 var app = express();
 
 app.set('port', (process.env.PORT || 3000));
@@ -10,14 +10,15 @@ app.set('port', (process.env.PORT || 3000));
 app.get('/', function(req, res) {
     request(url, function(error, response, body) {
         if (!error) {
-            var $ = cheerio.load(body),
-                tod = $("dailyquote p").html();
-            console.log(tod);
+            var reg = /[A-Z]([a-z]+|\.)(?:\s+[A-Z]([a-z]+|\.))*(?:\s+[a-z][a-z\-]+){0,2}\s+[A-Z]([a-z]+|\.)/
+            var $ = cheerio.load(body);
+            var tod = $("dailyquote p").html();
+            var author = $('dailyquote p.author').text().trim().match(reg)[0];
 
         } else {
             console.log("We’ve encountered an error: " + error);
         }
-        res.send(200, { "tod": tod });
+        res.send(200, { "tod": tod, "author": author });
     });
 });
 
