@@ -1,12 +1,16 @@
 {
-  "name": "ThoughtOfTheDay",
-  "description": "Checking out Express",
-  "version": "0.0.1",
-  "private": true,
-  "main":"server.js",
-  "dependencies": {
-    "express": "3.x",
-    "request":"*",
-    "cheerio":"*"
-  }
+    "name": "thought-of-the-day",
+    "description": "A app for web scarpping the thought of the day",
+    "version": "0.0.1",
+    "private": true,
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "express": "3.x",
+        "request": "*",
+        "cheerio": "*"
+    }
 }
