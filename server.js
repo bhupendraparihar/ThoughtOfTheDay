@@ -4,7 +4,8 @@ var request = require("request"),
     url = "http://www.eduro.com/";
 tod = '';
 var app = express();
-var PORT = 3000;
+
+app.set('port', (process.env.PORT || 3000));
 
 app.get('/', function(req, res) {
     request(url, function(error, response, body) {
@@ -20,6 +21,6 @@ app.get('/', function(req, res) {
     });
 });
 
-app.listen(PORT, function() {
+app.listen(app.get('port'), function() {
     console.log('Express server started at PORT : ' + PORT);
 });
