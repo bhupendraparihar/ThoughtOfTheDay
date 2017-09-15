@@ -8,15 +8,15 @@ var PORT = 3000;
 
 app.get('/', function(req, res) {
     request(url, function(error, response, body) {
-        if (!error) {
-            var $ = cheerio.load(body),
-                tod = $("dailyquote p").html();
-            console.log(tod);
+        // if (!error) {
+        //     var $ = cheerio.load(body),
+        //         tod = $("dailyquote p").html();
+        //     console.log(tod);
 
-        } else {
-            console.log("We’ve encountered an error: " + error);
-        }
-        res.send(200, { "tod": tod });
+        // } else {
+        //     console.log("We’ve encountered an error: " + error);
+        // }
+        res.send(200, { "tod": "Hello There" }); //tod
     });
 });
 
