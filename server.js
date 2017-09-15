@@ -22,5 +22,5 @@ app.get('/', function(req, res) {
 });
 
 app.listen(app.get('port'), function() {
-    console.log('Express server started at PORT : ' + PORT);
+    console.log('Express server started at PORT : ' + app.get('port'));
 });
