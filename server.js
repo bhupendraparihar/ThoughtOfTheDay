@@ -4,7 +4,9 @@ var request = require("request"),
     url = "http://www.eduro.com/";
 
 var app = express();
-
+var todaysDate = "";
+var tod = "";
+var author = "";
 app.set('port', (process.env.PORT || 3000));
 
 app.use(function(req, res, next) {
@@ -14,18 +16,25 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res) {
-    request(url, function(error, response, body) {
-        if (!error) {
-            var reg = /[A-Z]([a-z]+|\.)(?:\s+[A-Z]([a-z]+|\.))*(?:\s+[a-z][a-z\-]+){0,2}\s+[A-Z]([a-z]+|\.)/
-            var $ = cheerio.load(body);
-            var tod = $("dailyquote p").html();
-            var author = $('dailyquote p.author').text().trim().match(reg)[0];
-
-        } else {
-            console.log("We’ve encountered an error: " + error);
-        }
+    let now = new Date();
+    let currentDate = now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
+    if (todaysDate !== currentDate) {
+        request(url, function(error, response, body) {
+            if (!error) {
+                var reg = /[A-Z]([a-z]+|\.)(?:\s+[A-Z]([a-z]+|\.))*(?:\s+[a-z][a-z\-]+){0,2}\s+[A-Z]([a-z]+|\.)/
+                var $ = cheerio.load(body);
+                tod = $("dailyquote p").html();
+                author = $('dailyquote p.author').text().trim().match(reg)[0];
+                todaysDate = currentDate;
+            } else {
+                console.log("We’ve encountered an error: " + error);
+            }
+            res.send(200, { "tod": tod, "author": author });
+        });
+    } else {
         res.send(200, { "tod": tod, "author": author });
-    });
+    }
+
 });
 
 app.listen(app.get('port'), function() {
